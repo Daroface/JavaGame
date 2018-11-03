@@ -1,26 +1,28 @@
 package pl.dominik.dziembala.model.gameobject;
 
+import java.awt.Color;
 import java.awt.geom.*;
 
-public class Player implements GameObject {
+public class Player extends GameObject {
+		
+	private int life;
+	private static final int MAXJUMPAMOUNT = 2;
+	private int jumpAmount;
+	private static final int JUMPVALUE = 50;
+	private int speed = 1;
 	
-	private static final int DIAMETER = 10;
-	private Ellipse2D circle;
-	private int xPosition = 0;
-	private int yPosition = 250;
-	
-	public Player() {
-		circle = new Ellipse2D.Double(xPosition, yPosition, DIAMETER, DIAMETER);
+	public Player(Color color, int xPosition, int yPosition, int diameter) {
+		super(color, xPosition, yPosition, diameter, diameter);
+		shape = new Ellipse2D.Double(this.xPosition, this.yPosition, this.width, this.height);
+		life = 1;
+		jumpAmount = 0;
 	}
-	
-	public Ellipse2D getShape() {
-		return circle;
-	}
-	
-	public void moveX() {
-		if(xPosition < 300) {
-			xPosition += 1;
-			circle = new Ellipse2D.Double(xPosition, yPosition, DIAMETER, DIAMETER);	
+		
+	@Override
+	public void move() {
+		if(xPosition < 200) {
+			xPosition += speed;
+			shape = new Ellipse2D.Double(xPosition, yPosition, width, height);	
 		}			
 	}
 
