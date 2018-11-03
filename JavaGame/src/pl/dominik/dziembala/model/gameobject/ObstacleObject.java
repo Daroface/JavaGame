@@ -7,7 +7,7 @@ public class ObstacleObject extends GameObject {
 
 	public int speed;
 
-	protected ObstacleObject(Color color, int xPosition, int yPosition, int width, int height, int speed) {
+	public ObstacleObject(Color color, int xPosition, int yPosition, int width, int height, int speed) {
 		super(color, xPosition, yPosition, width, height);
 		shape = new Rectangle2D.Double(xPosition, yPosition, width, height);
 		this.speed = speed;
