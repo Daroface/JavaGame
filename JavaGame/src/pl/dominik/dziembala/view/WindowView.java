@@ -1,16 +1,70 @@
 package pl.dominik.dziembala.view;
 
-import javax.swing.JFrame;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Toolkit;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
-public class WindowView {
-	
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+
+import pl.dominik.dziembala.model.gameobject.GameObject;
+
+@SuppressWarnings("serial")
+public class WindowView extends JPanel {
+
 	private JFrame window;
-	
-	public WindowView() {
+	private int height;
+	private int width;
+	private Map<String, ArrayList<GameObject>> objects;
+
+	public WindowView(int width, int height) {
+		this.height = height;
+		this.width = width;
+		objects = new HashMap<>();
 		window = new JFrame("Java Game");
-		window.setSize(486, 300);
+		window.setSize(this.width, this.height);
 		window.setVisible(true);
-		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);		
+		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.add(this);
 	}
 
+	
+	@Override
+	protected void paintComponent(Graphics g) {
+		super.paintComponent(g);
+		Graphics2D g2d = (Graphics2D) g;		
+		if(!objects.isEmpty()) {
+			paintGameObject(g2d, "Sky");
+			paintGameObject(g2d, "Floor");
+			paintGameObject(g2d, "Player");
+		}		
+		Toolkit.getDefaultToolkit().sync();
+	}
+	
+	private void paintGameObject(Graphics2D g2d, String name) {
+		for(GameObject tmp : objects.get(name)) {
+			g2d.setColor(tmp.getColor());
+			g2d.fill(tmp.getShape());	
+		}
+			
+	}
+	
+	public void addObject(String name, GameObject gameObject) {
+		if(objects.get(name)==null) {
+			ArrayList<GameObject> tmp = new ArrayList<>();
+			tmp.add(gameObject);
+			objects.put(name, tmp);
+		}
+		else {
+			objects.get(name).add(gameObject);
+		}
+		
+	}
+	
+	public void repaintView() {
+		this.repaint();
+	}
 }
