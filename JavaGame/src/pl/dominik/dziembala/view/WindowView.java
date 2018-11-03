@@ -28,6 +28,7 @@ public class WindowView extends JPanel {
 		window.setSize(this.width, this.height);
 		window.setVisible(true);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		window.setResizable(false);
 		window.add(this);
 	}
 
