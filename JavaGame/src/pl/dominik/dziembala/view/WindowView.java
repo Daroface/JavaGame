@@ -3,6 +3,7 @@ package pl.dominik.dziembala.view;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
+import java.awt.event.KeyListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,7 +21,7 @@ public class WindowView extends JPanel {
 	private int width;
 	private Map<String, ArrayList<GameObject>> objects;
 
-	public WindowView(int width, int height) {
+	public WindowView(int width, int height, KeyListener keyListener) {
 		this.height = height;
 		this.width = width;
 		objects = new HashMap<>();
@@ -30,6 +31,7 @@ public class WindowView extends JPanel {
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setResizable(false);
 		window.add(this);
+		window.addKeyListener(keyListener);
 	}
 
 	
@@ -40,6 +42,7 @@ public class WindowView extends JPanel {
 		if(!objects.isEmpty()) {
 			paintGameObject(g2d, "Sky");
 			paintGameObject(g2d, "Floor");
+			paintGameObject(g2d, "Obstacle");
 			paintGameObject(g2d, "Player");
 		}		
 		Toolkit.getDefaultToolkit().sync();
@@ -54,15 +57,14 @@ public class WindowView extends JPanel {
 	}
 	
 	public void addObject(String name, GameObject gameObject) {
-		if(objects.get(name)==null) {
-			ArrayList<GameObject> tmp = new ArrayList<>();
-			tmp.add(gameObject);
-			objects.put(name, tmp);
-		}
-		else {
-			objects.get(name).add(gameObject);
-		}
+		ArrayList<GameObject> tmp = new ArrayList<>();
+		tmp.add(gameObject);
+		objects.put(name, tmp);
 		
+	}
+	
+	public void addObject(String name, ArrayList<GameObject> gameObjects) {
+		objects.put(name, gameObjects);		
 	}
 	
 	public void repaintView() {
