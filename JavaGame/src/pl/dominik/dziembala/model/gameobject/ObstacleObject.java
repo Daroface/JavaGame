@@ -21,9 +21,4 @@ public class ObstacleObject extends GameObject {
 			shape = new Rectangle2D.Double(xPosition, yPosition, width, height);
 		}
 	}
-
-	@Override
-	public void jump() {
-	}
-
 }

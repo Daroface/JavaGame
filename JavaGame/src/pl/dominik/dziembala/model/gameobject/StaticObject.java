@@ -13,9 +13,4 @@ public class StaticObject extends GameObject {
 	@Override
 	public void move() {		
 	}
-
-	@Override
-	public void jump() {		
-	}
-
 }
