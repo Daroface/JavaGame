@@ -10,16 +10,17 @@ public class Player extends GameObject {
 	private static final double JUMPWIDTH = 130.0;
 	private double jumpWay = 0.0;
 	private double doubleJumpWay = 0.0;
-	private double speed = 1.0;
+	private double speed;
 	private int normalYPosition;
 	private int actualYPosition;
 	private volatile int score = 0;
 
-	public Player(Color color, int xPosition, int yPosition, int diameter) {
+	public Player(Color color, int xPosition, int yPosition, int diameter, double speed) {
 		super(color, xPosition, yPosition, diameter, diameter);
 		normalYPosition = yPosition;
 		actualYPosition = yPosition;
 		shape = new Ellipse2D.Double(this.xPosition, this.yPosition, this.width, this.height);
+		this.speed = speed;
 	}
 
 	@Override

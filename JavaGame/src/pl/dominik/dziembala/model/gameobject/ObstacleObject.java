@@ -5,9 +5,9 @@ import java.awt.geom.Rectangle2D;
 
 public class ObstacleObject extends GameObject {
 
-	public int speed;
+	public double speed;
 
-	public ObstacleObject(Color color, int xPosition, int yPosition, int width, int height, int speed) {
+	public ObstacleObject(Color color, int xPosition, int yPosition, int width, int height, double speed) {
 		super(color, xPosition, yPosition, width, height);
 		shape = new Rectangle2D.Double(xPosition, yPosition, width, height);
 		this.speed = speed;
