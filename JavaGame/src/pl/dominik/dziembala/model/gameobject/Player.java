@@ -20,7 +20,7 @@ public class Player extends GameObject {
 		normalYPosition = yPosition;
 		actualYPosition = yPosition;
 		shape = new Ellipse2D.Double(this.xPosition, this.yPosition, this.width, this.height);
-		this.speed = speed;
+		this.speed = speed;		
 	}
 
 	@Override

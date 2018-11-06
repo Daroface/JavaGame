@@ -44,7 +44,7 @@ public class GameController {
 	private int obstacleToCheck = 0;
 	private boolean obstacleAdded = false;
 	private String musicName = "./IntroTheme.wav";
-	private double speed = 1.0;
+	private double speed = 2.0;
 
 	public GameController() {
 		try {
@@ -188,11 +188,11 @@ public class GameController {
 			obstacleAdded = false;
 			int choose = generator.nextInt(2);
 			if (choose == 0)
-				obstacleList.add(new ObstacleObject(Color.decode("#660000"), arrayOfLength[4], BIGOBSTACLEYPOSITION, 20,
-						100, 1));
+				obstacleList.add(new ObstacleObject(Color.decode("#660000"), arrayOfLength[4], BIGOBSTACLEYPOSITION,
+						OBSTACLEWIDTH, BIGOBSTACLEHEIGHT, speed));
 			else
 				obstacleList.add(new ObstacleObject(Color.decode("#990000"), arrayOfLength[4], SMALLOBSTACLEYPOSITION,
-						20, 50, 1));
+						OBSTACLEWIDTH, SMALLOBSTACLEHEIGHT, speed));
 			windowView.addObject("Obstacle", obstacleList);
 		}
 	}
@@ -222,9 +222,10 @@ public class GameController {
 	private void playerMoveTimerRunning() {
 		windowView.deactiveButton();
 		musicPlayer.playMusic();
+		windowView.setScore(String.valueOf((player.getScore())));
 		playerMoveTimer.start();
 		while (playerMoveTimer.isRunning()) {
-			if (player.getXPosition() == 195) {
+			if (player.getXPosition() == 196) {
 				obstaclesMoveTimer.start();
 			}
 			if (player.getXPosition() == 200)
@@ -233,6 +234,7 @@ public class GameController {
 	}
 
 	private void clearAndShowScore() {
+		windowView.setScore(String.valueOf((player.getScore())));
 		player = null;
 		floor = null;
 		sky = null;
@@ -240,8 +242,7 @@ public class GameController {
 		obstacleAdded = false;
 		obstacleToCheck = 0;
 		createPlayerAndStaticGameObjects();
-		createObstacleGameObjects();
-		windowView.setScore(String.valueOf((player.getScore())));
+		createObstacleGameObjects();		
 		windowView.activeButton();
 	}
 }
