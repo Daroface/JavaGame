@@ -43,7 +43,7 @@ public class GameController {
 	private boolean keyIsDown = false;
 	private int obstacleToCheck = 0;
 	private boolean obstacleAdded = false;
-	private String musicName = "/home/daroface/Pobrane/IntroTheme.wav";
+	private String musicName = "./IntroTheme.wav";
 	private double speed = 1.0;
 
 	public GameController() {
