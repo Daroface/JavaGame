@@ -4,11 +4,14 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Toolkit;
 import java.awt.event.KeyListener;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import pl.dominik.dziembala.model.gameobject.GameObject;
@@ -20,8 +23,11 @@ public class WindowView extends JPanel {
 	private int height;
 	private int width;
 	private Map<String, ArrayList<GameObject>> objects;
+	private JButton playButton;
+	private JLabel scoreLabel;
 
-	public WindowView(int width, int height, KeyListener keyListener) {
+	public WindowView(int width, int height, KeyListener keyListener, MouseListener mouseListener, JButton playButton,
+			JLabel scoreLabel) {
 		this.height = height;
 		this.width = width;
 		objects = new HashMap<>();
@@ -32,42 +38,67 @@ public class WindowView extends JPanel {
 		window.setResizable(false);
 		window.add(this);
 		window.addKeyListener(keyListener);
+		this.setLayout(null);
+		this.playButton = playButton;
+		this.scoreLabel = scoreLabel;
+		this.add(this.playButton);
+		this.add(this.scoreLabel);
+		this.playButton.addMouseListener(mouseListener);
+		this.scoreLabel.setVisible(false);
 	}
 
-	
 	@Override
 	protected void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		Graphics2D g2d = (Graphics2D) g;		
-		if(!objects.isEmpty()) {
+		Graphics2D g2d = (Graphics2D) g;
+		if (!objects.isEmpty()) {
 			paintGameObject(g2d, "Sky");
 			paintGameObject(g2d, "Floor");
 			paintGameObject(g2d, "Obstacle");
 			paintGameObject(g2d, "Player");
-		}		
+		}
 		Toolkit.getDefaultToolkit().sync();
 	}
-	
+
 	private void paintGameObject(Graphics2D g2d, String name) {
-		for(GameObject tmp : objects.get(name)) {
+		for (GameObject tmp : objects.get(name)) {
 			g2d.setColor(tmp.getColor());
-			g2d.fill(tmp.getShape());	
+			g2d.fill(tmp.getShape());
 		}
-			
+
 	}
-	
+
 	public void addObject(String name, GameObject gameObject) {
 		ArrayList<GameObject> tmp = new ArrayList<>();
 		tmp.add(gameObject);
 		objects.put(name, tmp);
-		
+
 	}
-	
+
 	public void addObject(String name, ArrayList<GameObject> gameObjects) {
-		objects.put(name, gameObjects);		
+		objects.put(name, gameObjects);
 	}
-	
+
 	public void repaintView() {
 		this.repaint();
+	}
+
+	public void deactiveButton() {
+		playButton.setVisible(false);
+		playButton.setFocusable(false);
+		window.requestFocusInWindow();
+		playButton.setText("Play Again");
+		scoreLabel.setVisible(true);
+		scoreLabel.setBounds(380, 0, 100, 50);
+	}
+
+	public void activeButton() {
+		playButton.setVisible(true);
+		playButton.setFocusable(true);
+		scoreLabel.setBounds(190, 50, 100, 50);
+	}
+	
+	public void setScore(String score) {
+		scoreLabel.setText(score);
 	}
 }
