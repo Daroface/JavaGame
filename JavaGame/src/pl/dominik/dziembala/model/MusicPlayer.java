@@ -14,7 +14,6 @@ public class MusicPlayer {
 	
 	public MusicPlayer(String name) throws Exception {
 		this.name = name;		
-		System.out.println(this.name);
 		audioInputStream = AudioSystem.getAudioInputStream(new File(this.name));
 		clip = AudioSystem.getClip();
 		clip.open(audioInputStream);		
