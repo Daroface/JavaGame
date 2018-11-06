@@ -13,6 +13,7 @@ public class Player extends GameObject {
 	private double speed = 1.0;
 	private int normalYPosition;
 	private int actualYPosition;
+	private volatile int score = 0;
 
 	public Player(Color color, int xPosition, int yPosition, int diameter) {
 		super(color, xPosition, yPosition, diameter, diameter);
@@ -34,7 +35,7 @@ public class Player extends GameObject {
 		switch (jumpAmount) {
 		case 1: {
 			if (jumpWay / JUMPWIDTH != 1.0) {
-				jumpWay += 1.0;
+				jumpWay += speed;
 				yPosition = normalYPosition
 						- (int) (JUMPVALUE * Math.sin((jumpWay / JUMPWIDTH * Math.toRadians(180.0))));
 			} else {
@@ -46,7 +47,7 @@ public class Player extends GameObject {
 
 		case 2: {
 			if (yPosition < normalYPosition) {
-				doubleJumpWay += 1.0;
+				doubleJumpWay += speed;
 				yPosition = actualYPosition
 						- (int) ((JUMPVALUE) * Math.sin((doubleJumpWay / (JUMPWIDTH) * Math.toRadians(180.0))));
 			} else {
@@ -85,8 +86,8 @@ public class Player extends GameObject {
 	public boolean checkCollision(GameObject obstacle) {
 		double collisionX1Position = this.xPosition + 0.97;
 		double collisionX2Position = this.xPosition + this.width - 0.97;
-		double collisionYPosition = this.yPosition + this.height - 0.97;
-		if ((double) obstacle.yPosition > collisionYPosition)
+		double collisionY1Position = this.yPosition + this.height - 0.97;
+		if ((double) (obstacle.yPosition)  > collisionY1Position)
 			return false;
 		else if ((double) (obstacle.xPosition) > collisionX2Position)
 			return false;
@@ -96,4 +97,11 @@ public class Player extends GameObject {
 			return true;
 	}
 
+	public void incrementScore(int points) {
+		score += points;
+	}
+	
+	public int getScore() {
+		return score;
+	}
 }
