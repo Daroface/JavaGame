@@ -5,12 +5,13 @@ import java.awt.geom.Rectangle2D;
 
 public class StaticObject extends GameObject {
 
+	/*
+	 * Static object's constructor.
+	 */
 	public StaticObject(Color color, int xPosition, int yPosition, int width, int height) {
-		super(color, xPosition, yPosition, width, height);
+		super(xPosition, yPosition, width, height);
+		this.color = color;
 		this.shape = new Rectangle2D.Double(this.xPosition, this.yPosition, this.width, this.height);
 	}
-
-	@Override
-	public void move() {		
-	}
+	
 }

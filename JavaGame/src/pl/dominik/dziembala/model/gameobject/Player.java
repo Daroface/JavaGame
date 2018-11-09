@@ -1,7 +1,10 @@
 package pl.dominik.dziembala.model.gameobject;
 
-import java.awt.Color;
-import java.awt.geom.*;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 public class Player extends GameObject {
 
@@ -15,23 +18,32 @@ public class Player extends GameObject {
 	private int actualYPosition;
 	private volatile int score = 0;
 
-	public Player(Color color, int xPosition, int yPosition, int diameter, double speed) {
-		super(color, xPosition, yPosition, diameter, diameter);
+	/*
+	 * Player's constructor.
+	 */
+	public Player(String imageName, int xPosition, int yPosition, int diameter, double speed) throws IOException {
+		super(xPosition, yPosition, diameter, diameter);
 		normalYPosition = yPosition;
 		actualYPosition = yPosition;
-		shape = new Ellipse2D.Double(this.xPosition, this.yPosition, this.width, this.height);
-		this.speed = speed;		
+		this.speed = speed;
+		image = ImageIO.read(new File(imageName));
+		imageLabel = new JLabel(new ImageIcon(image));
+		imageLabel.setBounds(this.xPosition, this.yPosition, this.width, this.height);
 	}
 
-	@Override
+	/*
+	 * Method which moves player horizontally.
+	 */
 	public void move() {
 		if (xPosition < 200) {
 			xPosition += speed;
-			shape = null;
-			shape = new Ellipse2D.Double(xPosition, yPosition, width, height);
+			imageLabel.setBounds(this.xPosition, this.yPosition, this.width, this.height);
 		}
 	}
 
+	/*
+	 * Method which moves Player vertically
+	 */
 	public void jump() {
 		switch (jumpAmount) {
 		case 1: {
@@ -62,12 +74,13 @@ public class Player extends GameObject {
 		}
 		}
 		if (jumpAmount != 0) {
-
-			shape = null;
-			shape = new Ellipse2D.Double(xPosition, yPosition, width, height);
+			imageLabel.setBounds(this.xPosition, this.yPosition, this.width, this.height);
 		}
 	}
 
+	/*
+	 * Method which controls player's jump amount.
+	 */
 	public void increaseJumpAmount() {
 		switch (jumpAmount) {
 		case 0: {
@@ -84,11 +97,14 @@ public class Player extends GameObject {
 		}
 	}
 
+	/*
+	 * Method which checks player collision with obstacle. If player is in collision - return true.
+	 */
 	public boolean checkCollision(GameObject obstacle) {
 		double collisionX1Position = this.xPosition + 0.97;
 		double collisionX2Position = this.xPosition + this.width - 0.97;
 		double collisionY1Position = this.yPosition + this.height - 0.97;
-		if ((double) (obstacle.yPosition)  > collisionY1Position)
+		if ((double) (obstacle.yPosition) > collisionY1Position)
 			return false;
 		else if ((double) (obstacle.xPosition) > collisionX2Position)
 			return false;
@@ -98,10 +114,16 @@ public class Player extends GameObject {
 			return true;
 	}
 
+	/*
+	 * Method which increments score.
+	 */
 	public void incrementScore(int points) {
 		score += points;
 	}
-	
+
+	/*
+	 * Method which returns score.
+	 */
 	public int getScore() {
 		return score;
 	}
