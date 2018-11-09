@@ -20,7 +20,7 @@ import pl.dominik.dziembala.view.WindowView;
 public class GameController {
 
 	/*
-	 * Constant
+	 * Constants
 	 */
 	private static final int HEIGHT = 300;
 	private static final int WIDTH = 480;
@@ -30,14 +30,14 @@ public class GameController {
 	private static final int SMALLOBSTACLEHEIGHT = 50;
 	private static final int OBSTACLEWIDTH = 20;
 	private static final int LENGTH = OBSTACLEWIDTH + 210;
-	private static final String MUSICNAME = "/home/daroface/Pobrane/gra/media/musicFile.wav";
-	private static final String PLAYERIMAGENAME = "/home/daroface/Pobrane/gra/media/monkey.png";
-	private static final String BIGOBSTACLEIMAGENAME = "/home/daroface/Pobrane/gra/media/bigPalm.png";
-	private static final String SMALLOBSTACLEIMAGENAME = "/home/daroface/Pobrane/gra/media/smallPalm.png";
+	private static final String MUSICNAME = "./media/musicFile.wav";
+	private static final String PLAYERIMAGENAME = "./media/monkey.png";
+	private static final String BIGOBSTACLEIMAGENAME = "./media/bigPalm.png";
+	private static final String SMALLOBSTACLEIMAGENAME = "./media/smallPalm.png";
 	private static final double SPEED = 2.0;
 	
 	/*
-	 * Variable
+	 * Variables
 	 */
 	private volatile WindowView WindowView;
 	private JButton playButton;
